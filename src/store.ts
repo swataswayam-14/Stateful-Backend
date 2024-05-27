@@ -9,9 +9,16 @@ interface Game {
 
 export class GameManager{
     games:Game[] = [];
-
-    constructor(){
+    private static instance: GameManager;
+    private constructor(){
         this.games = [];
+    }
+    static getInstance(){
+        if(GameManager.instance){
+            return GameManager.instance;
+        }
+        GameManager.instance = new GameManager();
+        return this.instance;
     }
     addMove(gameId:string , move:string){
         console.log(`adding move ${move} to game with id ${gameId}`);
@@ -33,4 +40,4 @@ export class GameManager{
         console.log(this.games);
     }
 }
-export const gameManager = new GameManager() //single instance of gameManager variable that can be used accross all the files
+export const gameManager = GameManager.getInstance()//single instance of gameManager variable that can be used accross all the files
